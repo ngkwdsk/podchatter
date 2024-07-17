@@ -40,8 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_14_081218) do
   end
 
   create_table "podcasts", charset: "utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "discription", null: false
+    t.string "show_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,21 +1,7 @@
 
 
-<%= form_with url: root_path, method: :get, local: true do |f| %>
-  <%= f.label :spotify_id, 'Enter the Spotify ID' %>
-  <%= f.text_field :spotify_id %>
-  <%= f.submit 'Search' %>
+<% @podcast_data.each do |podcast| %>
+  <h2><%= podcast.name %></h2>
+  <p><%= podcast.description %></p>
+  <%= link_to image_tag(podcast.image),root_path %>
 <% end %>
-
-<!--
-<% @podcasts.each do |podcast| %>
-  <%= podcast.name %><br/>
-  <%= podcast.discription %>
-<% end %>
--->
-
-<% if @podcast_data %>
-  <h2><%= @podcast_data.name %></h2>
-  <p><%= @podcast_data.description %></p>
-  <%= image_tag @podcast_data.image if @podcast_data.image %>
-<% end %>
-
