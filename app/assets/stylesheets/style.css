@@ -54,6 +54,11 @@ a {
 .logo {
   width: 200px;
 }
+
+.search {
+  width: 100px;
+}
+
 .nav__btn{
   display: inline-block;
   padding: 0.4em 1.6em;

@@ -3,5 +3,5 @@
 <% @podcast_data.each do |podcast| %>
   <h2><%= podcast.name %></h2>
   <p><%= podcast.description %></p>
-  <%= link_to image_tag(podcast.image),root_path %>
+  <%= link_to image_tag(podcast.image),podcast_path(podcast.id) %>
 <% end %>

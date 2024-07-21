@@ -1,0 +1,44 @@
+<main class="main">
+<div class="inner">
+<div class="prototype__wrapper">
+<p class="prototype__hedding">
+	<%= @podcast.name %>
+</p>
+
+<div class="prototype__image">
+  <%= image_tag @podcast.image %>
+</div>
+
+<div class="prototype__body">
+<div class="prototype__detail">
+<p class="detail__title">この番組の説明</p>
+<p class="detail__message">
+<%= @podcast.description %>
+</p>
+
+<% if false %>
+      <div class="prototype__comments">
+        <% if user_signed_in? %>
+          <%= form_with(model: [ @prototype, @comment ], local: true) do |f| %>
+            <div class="field">
+              <%= f.label :content, "コメント" %><br />
+              <%= f.text_field :content, id:"comment_content" %>
+            </div>
+            <div class="actions">
+              <%= f.submit "送信する", class: :form__btn %>
+            </div>
+          <% end %>
+        <% end %>
+        <ul class="comments_lists">
+          <% @comments.each do |comment| %>
+            <li class="comments_list">
+              <%= comment.content %>
+              <%= link_to comment.user.name, "/users/#{@prototype.user.id}", class: :comment_user %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+<% end %>

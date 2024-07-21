@@ -7,6 +7,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag 'application' %>
     <%= javascript_importmap_tags %>
   </head>
 
@@ -16,6 +17,7 @@
         <div class="nav">
           <div class="nav__left">
             <%= link_to image_tag("logo.png", class: :logo), root_path %>
+            <%= link_to image_tag("search.png", class: :search), search_podcasts_path %>
           </div>
           <% if user_signed_in? %>
             <div class="nav__right"> 
