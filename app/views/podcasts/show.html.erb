@@ -1,20 +1,9 @@
-<main class="main">
-<div class="inner">
-<div class="prototype__wrapper">
-<p class="prototype__hedding">
-	<%= @podcast.name %>
-</p>
-
-<div class="prototype__image">
-  <%= image_tag @podcast.image %>
-</div>
-
-<div class="prototype__body">
-<div class="prototype__detail">
-<p class="detail__title">この番組の説明</p>
-<p class="detail__message">
-<%= @podcast.description %>
-</p>
+<h1><%= @podcast.name %></h1>
+<%= image_tag @podcast.image %>
+<p><%= @podcast.description %></p>
+<% if user_signed_in? %>
+  <%= render partial: "likes/like", locals: { podcast: @podcast.original_podcast } %>
+<% end %>
 
 <% if false %>
       <div class="prototype__comments">

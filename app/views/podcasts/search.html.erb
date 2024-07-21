@@ -16,9 +16,13 @@
           <% else %>
             <%= image_tag("default.jpg") %>
           <% end %>
-          <h3><%= searchpodcast.description %></h3>
-          <p><%= searchpodcast.id %></p>
+          <h3><%= searchpodcast.description.truncate(100) %></h3>
+          <% if Podcast.exists?(show_id: searchpodcast.id) %>
+          <% podcast = Podcast.find_by(show_id: searchpodcast.id) %>
+          <%= link_to "聴きたい！", podcast_likes_path(podcast_id: podcast.id, show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-default' %>
+          <% else %>
           <%= link_to "登録する", podcasts_path(show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-default' %>
+          <% end %>
       </div>
     <% end %>
   <% else %>

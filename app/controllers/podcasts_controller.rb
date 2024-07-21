@@ -8,6 +8,13 @@ class PodcastsController < ApplicationController
   def index
     @podcasts = Podcast.all
     @podcast_data = @podcasts.map{ |podcast| get_podcast_data(podcast) }
+    if user_signed_in?
+      @liked_podcast = @podcasts.select{ |podcast| podcast.likes.exists?(user_id: current_user.id) }.map{ |podcast| get_podcast_data(podcast) }
+      @not_liked_podcast = @podcasts.select{ |podcast| !podcast.likes.exists?(user_id: current_user.id) }.map{ |podcast| get_podcast_data(podcast) }
+    else
+      @liked_podcast = []
+      @not_liked_podcast = @podcast_data
+    end
   end
   
   def show
@@ -23,7 +30,7 @@ class PodcastsController < ApplicationController
   def create
     @podcast = Podcast.new(show_id: params[:show_id])
     if @podcast.save
-      redirect_to podcasts_path, notice: '登録されました！'
+      @like = current_user.likes.create!(podcast_id: @podcast.id)
     else
       redirect_to search_podcasts_path, alert: @podcast.errors.full_messages.to_sentence
     end
@@ -31,13 +38,13 @@ class PodcastsController < ApplicationController
 
   private
 
-  PodcastData = Struct.new(:id, :image, :name, :description)
+  PodcastData = Struct.new(:id, :image, :name, :description, :original_podcast)
 
   def get_podcast_data(spotify_show)
     show = RSpotify::Show.find(spotify_show.show_id)
     return if show.nil?
-    image = show.images.empty? ? nil : show.images.first["url"]
-    PodcastData.new(spotify_show.id, image, show.name, show.description)
+    image = show.images.first.nil? ? nil : show.images.first["url"]
+    PodcastData.new(spotify_show.id, image, show.name, show.description, spotify_show)
   end
 
   def set_podcast
@@ -53,7 +60,6 @@ class PodcastsController < ApplicationController
   def podcast_params
     params.require(:podcast).permit(:show_id)
   end
-  
 end
 
 	
