@@ -80,3 +80,7 @@ gem 'mini_magick'
 gem 'image_processing', '~> 1.2'
 
 gem 'pry-rails'
+
+gem 'bootstrap', '~> 5.2.3'
+
+gem 'jquery-rails'

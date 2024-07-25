@@ -1,31 +1,54 @@
-<h3>ポッドキャスト名で検索</h3>
-<%= form_with url: search_podcasts_path, method: :get, local: true do |form| %>
-<%= form.text_field :search %>
-<%= form.submit 'Podcast名で検索', name: nil %>
-<% end %>
+<div class="container py-4 works">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h2 class="text-center">ポッドキャスト名で検索</h2>
+      <%= form_with url: search_podcasts_path, method: :get, local: true do |form| %>
+        <div class="text-center m-4">
+          <%= form.text_field :search, class: "form-control" %>
+        </div>
+        <div class="text-center">
+          <%= form.submit '検索', name: nil, class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<h1>検索結果</h1>
-<div>
+<div class="container py-4 works">
   <% if @searchpodcasts.present? %>
-    <% @searchpodcasts.each do |searchpodcast| %>
-      <div>
-        <h3><%= searchpodcast.name %></h3>
-          <% if searchpodcast.images.any? %>
-            <% image = searchpodcast.images[1] %>
-            <%= image_tag(image["url"]) %>
-          <% else %>
-            <%= image_tag("default.jpg") %>
-          <% end %>
-          <h3><%= searchpodcast.description.truncate(100) %></h3>
-          <% if Podcast.exists?(show_id: searchpodcast.id) %>
-          <% podcast = Podcast.find_by(show_id: searchpodcast.id) %>
-          <%= link_to "聴きたい！", podcast_likes_path(podcast_id: podcast.id, show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-default' %>
-          <% else %>
-          <%= link_to "登録する", podcasts_path(show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-default' %>
-          <% end %>
-      </div>
-    <% end %>
+    <h2 class="text-center">検索結果</h2>
+    <div class="row justify-content-center">
+      <% @searchpodcasts.each do |searchpodcast| %>
+        <div class="col-md-4">
+          <div class="card-deck">
+            <div class="card m-4">
+              <div class="card-img-top">
+                <% if searchpodcast.images.any? %>
+                  <% image = searchpodcast.images[1] %>
+                  <%= image_tag(image["url"], class: "img-fluid") %>
+                <% else %>
+                  <%= image_tag("default.jpg", class: "img-fluid") %>
+                <% end %>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title"><b><%= searchpodcast.name %></b></h5>
+                <p class="card-text"><small><%= searchpodcast.description.truncate(80) %></small></p>
+                <% if Podcast.exists?(show_id: searchpodcast.id) %>
+                  <% podcast = Podcast.find_by(show_id: searchpodcast.id) %>
+                  <%= link_to "聴きたい！", podcast_likes_path(podcast_id: podcast.id, show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-secondary' %>
+                <% else %>
+                  <%= link_to "登録する", podcasts_path(show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-secondary' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% elsif @searchpodcasts.nil? %>
   <% else %>
-    <p>該当するポッドキャストが見つかりませんでした。</p>
+    <div class="col-md-6 text-center">
+      <p>該当するポッドキャストが見つかりませんでした。</p>
+    </div>
   <% end %>
 </div>

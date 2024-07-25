@@ -1,20 +1,11 @@
-<% if user_signed_in? %>
-  <h1>お気に入りポッドキャスト</h1>
-  <% @liked_podcast.each do |podcast| %>
-    <h2><%= podcast.name %></h2>
-    <p><%= podcast.description.truncate(100) %></p>
-    <%= link_to image_tag(podcast.image),podcast_path(podcast.id) %>
-    <%= render partial: "likes/like", locals: { podcast: podcast.original_podcast } %>
-  <% end %>    
-<% end %>
-
-<h1>人気上昇中のポッドキャスト</h1>
-<% @not_liked_podcast.each do |podcast| %>
-  <h2><%= podcast.name %></h2>
-  <p><%= podcast.description.truncate(100) %></p>
-  <%= link_to image_tag(podcast.image),podcast_path(podcast.id) %>
+<div class="container py-4 works">
   <% if user_signed_in? %>
-    <%= render partial: "likes/like", locals: { podcast: podcast.original_podcast } %>
+    <h2 class="text-center">お気に入りポッドキャスト</h2>
+    <%= render 'podcasts', podcasts: @liked_podcast %>
   <% end %>
-<% end %>
+</div>
 
+<div class="container py-4 works">
+  <h2 class="text-center">人気上昇中のポッドキャスト</h2>
+  <%= render 'podcasts', podcasts: @not_liked_podcast %>
+</div>
