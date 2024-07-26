@@ -18,6 +18,8 @@ class PodcastsController < ApplicationController
   end
   
   def show
+    @comments = @podcast.original_podcast.comments.includes(:user)
+    @comment = Comment.new
   end
 
   def search
@@ -59,6 +61,10 @@ class PodcastsController < ApplicationController
 
   def podcast_params
     params.require(:podcast).permit(:show_id)
+  end
+
+  def index_user
+    @podcasts = Podcast.where(user_id:params[:id])
   end
 end
 

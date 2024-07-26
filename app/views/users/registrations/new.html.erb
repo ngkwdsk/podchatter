@@ -26,6 +26,15 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
+  <div class="mt-3 mb-5 <%= @user.errors.include?(:icon) ? "validation_errors" : "" %>">
+    <%= f.label :icon, '画像(5MBまで)', class: "form-label fw-bold" %><br>
+    <%= f.file_field :icon, onchange: "iconImage(this);", accept: "image/jpeg,image/gif,image/png", class: "mb-3" %>
+    <%= render 'layouts/error_messages',class: "invalid-feedback", model: @user, key: :icon %>
+    <div id="icon" >
+      <img id="icon_preview" class="mb-3" width="100">
+    </div>
+  </div>
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

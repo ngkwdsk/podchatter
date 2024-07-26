@@ -1,5 +1,9 @@
 <div class="container py-4 works">
   <% if user_signed_in? %>
+    <% if current_user.icon.attached? %>
+      <%= image_tag current_user.icon.variant(resize: '100x100') %>
+    <% end %>
+    <%= current_user.nickname %>
     <h2 class="text-center">お気に入りポッドキャスト</h2>
     <%= render 'podcasts', podcasts: @liked_podcast %>
   <% end %>

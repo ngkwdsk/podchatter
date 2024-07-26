@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   root to: "podcasts#index"
   resources :podcasts do
     resource :likes, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy]
     collection do
     get :search
+    end
+    member do
+    get :index_user
     end
   end
 end
