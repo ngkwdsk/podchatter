@@ -1,43 +1,86 @@
-<h2>新規登録</h2>
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
-  
-  <div class="field">
-    <%= f.label :nickname %><br />
-    <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname" %>
-  </div>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">新規登録</p>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+                <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'mx-1 mx-md-4' }) do |f| %>
+                  <%= render "users/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", class: "form-control" %>
+                      <%= f.label :ニックネーム, class: "form-label" %>
+                    </div>
+                  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+                      <%= f.label :メールアドレス, class: "form-label" %>
+                    </div>
+                  </div>
 
-  <div class="mt-3 mb-5 <%= @user.errors.include?(:icon) ? "validation_errors" : "" %>">
-    <%= f.label :icon, '画像(5MBまで)', class: "form-label fw-bold" %><br>
-    <%= f.file_field :icon, onchange: "iconImage(this);", accept: "image/jpeg,image/gif,image/png", class: "mb-3" %>
-    <%= render 'layouts/error_messages',class: "invalid-feedback", model: @user, key: :icon %>
-    <div id="icon" >
-      <img id="icon_preview" class="mb-3" width="100">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <%= f.text_area :profile, autofocus: true, autocomplete: "profile", class: "form-control",rows:"7" %>
+                      <%= f.label :プロフィール, class: "form-label" %>
+                    </div>
+                  </div>
+
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <%= f.file_field :icon, autofocus: true, autocomplete: "icon", class: "form-control" %>
+                      <%= f.label :アイコン画像, class: "form-label" %>
+                    </div>
+                  </div>
+
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+                      <%= f.label :パスワード, class: "form-label" %>
+                      <% if @minimum_password_length %>
+                        <em>(<%= @minimum_password_length %>文字以上)</em>
+                      <% end %>
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+                      <%= f.label :パスワード（確認用）, class: "form-label" %>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <%= f.submit "登録する", class: "btn btn-primary btn-lg" %>
+                  </div>
+                <% end %>
+
+                <%= render "users/shared/links" %>
+
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                <img src="<%= image_path('POD.png')%>"
+                  class="img-fluid" alt="Sample image">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</section>
