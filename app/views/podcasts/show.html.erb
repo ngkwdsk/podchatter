@@ -5,35 +5,67 @@
       <div class="text-center m-4">
         <%= image_tag @podcast.image, class: "img-fluid" %>
       </div>
-      
       <div>
         <p><%= @podcast.description %></p>
         <% if user_signed_in? %>
           <%= render partial: "likes/like", locals: { podcast: @podcast.original_podcast } %>
         <% end %>
       </div>
+
+      <div class="container mt-5">
+        <h6 class="text-center mb-4"><%= @podcast.name %>のエピソード一覧</h6>
+        <div class="table-responsive">
+          <table class="table table-striped">
+              <% @episodes.each do |episode| %>
+                <tr>
+                  <td><%= episode[:title] %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="container-fluid chat-container">
+        <div class="chats"  id="comments">
+          <h4>このポッドキャストについて語ろう</h4>
+          <% @podcast.original_podcast.comments.each do |comment| %>
+            <% if comment.user.present? %>
+              <div class="chat">
+                <% if comment.user.icon.attached? %>
+                  <%= image_tag comment.user.icon.variant(resize: '50x50'), alt: "ユーザーアイコン" %>
+                <% else %>
+                  <%= image_tag 'default.jpg', size: '50x50', alt: "ユーザーアイコン" %>
+                <% end %>
+                <div class="chat-content">
+                  <div>
+                    <span class="name"><%= link_to comment.user.nickname, index_user_podcast_path(comment.user) %>
+</span></span>
+                    <span class="time"><%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+                  </div>
+                  <div class="text"><%= sanitize(comment.text) %></div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="comment-form" >
+          <% if user_signed_in? %>
+            <%= form_with model: [@podcast.original_podcast, @comment], id: "comment-form" do |f| %>
+              <div class="form-group">
+                <%= f.text_area :text, class: "form-control comment-text", placeholder: "コメントを入力..." %>
+              </div>
+              <%= f.submit "コメントをする", class: "btn btn-primary comment-submit" %>
+            <% end %>
+          <% else %>
+            <p>コメントを投稿するにはログインしてください。</p>
+          <% end %>
+        </div>
     </div>
   </div>
 </div>
 
-<div id="comments" class= "text-center">
-  <h4>コメント一覧</h4>
-    <% @podcast.original_podcast.comments.each do |comment| %>
-  <% if comment.user.present? %>
-    <div class="comment">
-      <% if comment.user.icon.attached? %>
-        <%= image_tag comment.user.icon.variant(resize: '100x100') %>
-      <% end %>
-      <%= comment.user.nickname %>：<%= comment.text%>
-    </div>
-  <% end %>
-<% end %>
-
-<div class="comment-form text-center">
-  <% if user_signed_in? %>
-    <%= form_with model: [@podcast.original_podcast, @comment], id: "comment-form" do |f| %>
-      <%= f.text_area :text , class: "comment-text"%>
-      <%= f.submit "コメントをする", class: "comment-submit" %>
-    <% end %>
-  <% end %>
-</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

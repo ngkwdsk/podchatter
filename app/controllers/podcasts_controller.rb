@@ -1,5 +1,5 @@
 class PodcastsController < ApplicationController
-  before_action :set_podcast, only: [:show]
+  before_action :set_podcast, only: [:show, :show_episodes]
   before_action :move_to_index, except: [:index, :show, :search]
   
   require 'rspotify'
@@ -20,6 +20,7 @@ class PodcastsController < ApplicationController
   def show
     @comments = @podcast.original_podcast.comments.includes(:user)
     @comment = Comment.new
+    show_episodes
   end
 
   def search
@@ -38,6 +39,16 @@ class PodcastsController < ApplicationController
     end
   end
 
+  def show_episodes
+    @episodes = get_episodes(@podcast.original_podcast.show_id)
+  end
+
+  def index_user
+    @user = User.find_by(id: params[:id])
+    @liked_podcasts = @user.likes.map { |like| like.podcast }
+    @liked_podcast_data = @liked_podcasts.map { |podcast| get_podcast_data(podcast) }
+  end
+
   private
 
   PodcastData = Struct.new(:id, :image, :name, :description, :original_podcast)
@@ -47,6 +58,17 @@ class PodcastsController < ApplicationController
     return if show.nil?
     image = show.images.first.nil? ? nil : show.images.first["url"]
     PodcastData.new(spotify_show.id, image, show.name, show.description, spotify_show)
+  end
+
+  def get_episodes(show_id)
+    show = RSpotify::Show.find(show_id)
+    return [] if show.nil?
+    show.episodes(limit: 5).map do |episode|
+      {
+        id: episode.id,
+        title: episode.name
+      }
+    end
   end
 
   def set_podcast
@@ -63,9 +85,6 @@ class PodcastsController < ApplicationController
     params.require(:podcast).permit(:show_id)
   end
 
-  def index_user
-    @podcasts = Podcast.where(user_id:params[:id])
-  end
 end
 
 	

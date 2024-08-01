@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="profile-container">
+        <div class="profile-icon">
+          <%= image_tag @user.icon.variant(resize: "100x100^", gravity: "center", crop: "150x150+0+0"), class: "img-fluid rounded-circle" if @user.icon.attached? %>
+        </div>
+        <div class="profile-info">
+          <h2 class="profile-nickname"><%= @user.nickname %></h2>
+          <p class="profile-text"><%= @user.profile %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container py-4 works">
+    <h4 class= "text-center"><%= @user.nickname %>さんのお気に入りポッドキャスト</h4>
+    <%= render 'podcasts', podcasts: @liked_podcast_data %>
+</div>

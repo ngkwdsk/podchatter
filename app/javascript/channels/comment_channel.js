@@ -1,4 +1,4 @@
-import consumer from "channels/consumer"
+import consumer from "./consumer"
 
 if(location.pathname.match(/\/podcasts\/\d/)){
 
@@ -17,10 +17,16 @@ if(location.pathname.match(/\/podcasts\/\d/)){
 
     received(data) {
       const html = `
-        <div class="comment">
-          <p class="user-info">${data.user.nickname}： </p>
-          <p>${data.comment.text}</p>
-        </div>`
+        <div class="chat">
+      <img src="${data.icon_url}" />
+      <div class="chat-content">
+        <div>
+          <span class="name">${data.user.nickname}</span>
+          <span class="time">${data.created_at}</span>
+        </div>
+        <div class="text">${data.comment.text}</div>
+      </div>
+    </div>`;
       const comments = document.getElementById("comments")
       comments.insertAdjacentHTML('beforeend', html)
       const commentForm = document.getElementById("comment-form")
