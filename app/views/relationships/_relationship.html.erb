@@ -1,0 +1,10 @@
+<div id="follow-button-<%= user.id %>">
+	<% if current_user != user %>
+		<% if user.followed_by?(current_user) %>
+			<%=link_to "フォロー解除", user_relationships_path(user),class: "btn btn-outline-primary", data: { turbo_method: :delete, turbo_stream: true } %>
+		<% else %>
+			<%=link_to "フォローする", user_relationships_path(user),class: "btn btn-outline-success", data: { turbo_method: :post, turbo_stream: true } %>
+		<% end %>
+	<% end %>
+</div>
+

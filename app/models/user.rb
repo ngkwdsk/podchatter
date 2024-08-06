@@ -9,6 +9,16 @@ class User < ApplicationRecord
   has_many :likes
   has_many :comments
   has_one_attached :icon
+
+  has_many :active_relationships, class_name: "Relationship", foreign_key: :following_id
+  has_many :followings, through: :active_relationships, source: :follower
+
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: :follower_id
+  has_many :followers, through: :passive_relationships, source: :following
+
+  def followed_by?(user)
+    passive_relationships.find_by(following_id: user.id)
+  end
   
   after_create :set_default_icon
 
@@ -20,5 +30,4 @@ class User < ApplicationRecord
       icon.attach(io: File.open(default_image_path), filename: 'default.jpg', content_type: 'image/jpeg')
     end
   end
-
 end

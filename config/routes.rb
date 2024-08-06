@@ -11,5 +11,8 @@ Rails.application.routes.draw do
     get :index_user
     end
   end
+  resources :users do
+    resource :relationships, only: [:create, :destroy]
+  end
 end
 

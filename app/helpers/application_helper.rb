@@ -1,9 +1,9 @@
 module ApplicationHelper
-  def user_icon_url(user)
+  def user_icon(user)
     if user.icon.attached?
-      rails_blob_url(user.icon, only_path: true)
+      user.icon
     else
-      asset_path('default.jpg')
+      'path/to/default/icon.jpg'
     end
   end
 end

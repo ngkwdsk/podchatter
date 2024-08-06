@@ -1,0 +1,63 @@
+body {
+  background-color: $body-bg;
+  color: $body-color;
+}
+
+.card {
+  background-color: $card-bg;
+  border-color: #333;
+}
+
+.btn-secondary {
+  background-color: $secondary;
+  border-color: lighten($secondary, 10%);
+  color: $body-color;
+}
+
+.form-control {
+  background-color: $input-bg;
+  border-color: $input-border-color;
+  color: $input-color;
+}
+
+// 鮮やかなグリーンの半透明グラデーション用の変数
+$vivid-green-top: rgba(0, 255, 0, 0.4);    // より不透明な鮮やかなグリーン
+$vivid-green-bottom: rgba(0, 255, 0, 0.1); // より透明な鮮やかなグリーン
+
+// ヘッダーのスタイル
+header {
+  background: linear-gradient(
+    to bottom,
+    $vivid-green-top,
+    $vivid-green-bottom
+  );
+  padding: 20px 0;
+  position: relative;
+  z-index: 1000;
+}
+
+// フッターのスタイル
+footer {
+  background: linear-gradient(
+    to top,
+    $vivid-green-top,
+    $vivid-green-bottom
+  );
+  padding: 5px 0;
+  position: relative;
+  z-index: 1000;
+}
+
+// ヘッダーとフッター内のテキストのスタイル
+header, footer {
+  color: #ffffff;  // 白色テキスト（透明度が高いため、コントラストを確保）
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);  // テキストの可読性を向上
+  
+  a {
+    color: #ffffff;
+    &:hover {
+      color: #e0e0e0;
+      text-decoration: none;
+    }
+  }
+}

@@ -34,12 +34,12 @@
 
 <div class="container py-4 works">
   <% if user_signed_in? && @liked_podcast.present? %>
-    <h2 class="text-center">お気に入りポッドキャスト</h2>
+    <h2 class=" index-podcast text-center">お気に入りポッドキャスト</h2>
     <%= render 'podcasts', podcasts: @liked_podcast %>
   <% end %>
 </div>
 
 <div class="container py-4 works">
-  <h2 class="text-center">人気上昇中のポッドキャスト</h2>
+  <h2 class="index-podcast text-center">人気上昇中のポッドキャスト</h2>
   <%= render 'podcasts', podcasts: @not_liked_podcast %>
 </div>

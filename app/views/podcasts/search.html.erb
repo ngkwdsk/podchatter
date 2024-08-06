@@ -16,30 +16,30 @@
 
 <div class="container py-4 works">
   <% if @searchpodcasts.present? %>
-    <h2 class="text-center">検索結果</h2>
-    <div class="row justify-content-center">
+    <h2 class="index-podcast text-center">検索結果</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5" id="podcast-cards">
       <% @searchpodcasts.each do |searchpodcast| %>
-        <div class="col-md-4">
-          <div class="card-deck">
-            <div class="card m-4">
-              <div class="card-img-top">
-                <% if searchpodcast.images.any? %>
-                  <% image = searchpodcast.images[1] %>
-                  <%= image_tag(image["url"], class: "img-fluid") %>
-                <% else %>
-                  <%= image_tag("default.jpg", class: "img-fluid") %>
-                <% end %>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title"><b><%= searchpodcast.name %></b></h5>
-                <p class="card-text"><small><%= searchpodcast.description.truncate(80) %></small></p>
-                <% if Podcast.exists?(show_id: searchpodcast.id) %>
-                  <% podcast = Podcast.find_by(show_id: searchpodcast.id) %>
-                  <%= link_to "聴きたい！", podcast_likes_path(podcast_id: podcast.id, show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-secondary' %>
-                <% else %>
-                  <%= link_to "登録する", podcasts_path(show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-secondary' %>
-                <% end %>
-              </div>
+        <div class="col">
+          <div class="card h-100">
+            <div class="aspect-ratio-box">
+              <% if searchpodcast.images.any? %>
+                <% image = searchpodcast.images[1] %>
+                <%= image_tag(image["url"], class: 'aspect-ratio-box-inside') %>
+              <% else %>
+                <%= image_tag("default.jpg", class: 'aspect-ratio-box-inside') %>
+              <% end %>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title"><%= searchpodcast.name %></h5>
+              <p class="card-text description-text flex-grow-1" data-full-text="<%= searchpodcast.description %>">
+                <%= searchpodcast.description.truncate(80) %>
+              </p>
+              <% if Podcast.exists?(show_id: searchpodcast.id) %>
+                <% podcast = Podcast.find_by(show_id: searchpodcast.id) %>
+                <%= link_to "聴きたい！", podcast_likes_path(podcast_id: podcast.id, show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-secondary' %>
+              <% else %>
+                <%= link_to "登録する", podcasts_path(show_id: searchpodcast.id), data: { "turbo-method": :post }, class: 'btn btn-secondary' %>
+              <% end %>
             </div>
           </div>
         </div>

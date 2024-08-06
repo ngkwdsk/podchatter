@@ -6,3 +6,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "channels"
+import "spotify_embed"
+import "podcast_card"
