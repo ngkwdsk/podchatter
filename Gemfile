@@ -87,6 +87,9 @@ gem 'jquery-rails'
 
 gem 'rails-i18n'
 
+gem 'execjs', '~> 2.7'
+gem 'mini_racer', platforms: :ruby
+
 group :production do
   gem 'pg'
 end
