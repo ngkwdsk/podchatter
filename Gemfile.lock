@@ -144,8 +144,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jwt (2.8.2)
       base64
-    libv8-node (18.19.0.0-x86_64-darwin)
-    libv8-node (18.19.0.0-x86_64-linux)
     logger (1.6.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -163,8 +161,6 @@ GEM
     mime-types-data (3.2024.0702)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
-    mini_racer (0.14.0)
-      libv8-node (~> 18.19.0.0)
     minitest (5.24.1)
     msgpack (1.7.2)
     multi_xml (0.7.1)
@@ -341,13 +337,11 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
-  execjs (~> 2.7)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
   jquery-rails
   mini_magick
-  mini_racer
   mysql2 (~> 0.5)
   pg
   pry-rails
