@@ -1,8 +1,10 @@
-$body-bg: #121212;
-$card-bg: #1e1e1e;
-$body-color: #f8f9fa;
-$input-bg: #2a2a2a;
-$input-color: #f8f9fa;
-$input-border-color: #444;
-$primary: #007bff;
-$secondary: #4a4a4a;
+// _custom_variables.scss
+
+$body-bg: #121212 !default;
+$card-bg: #1e1e1e !default;
+$body-color: #f8f9fa !default;
+$input-bg: #2a2a2a !default;
+$input-color: #f8f9fa !default;
+$input-border-color: #444 !default;
+$primary: #007bff !default;
+$secondary: #4a4a4a !default;

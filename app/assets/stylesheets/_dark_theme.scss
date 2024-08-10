@@ -1,4 +1,14 @@
-body {
+// _dark_theme.scss
+
+@import "custom_variables";
+
+// デバッグ用コメント
+/* body-bg: #{$body-bg} */
+/* card-bg: #{$card-bg} */
+
+// 残りのコード
+
+.body {
   background-color: $body-bg;
   color: $body-color;
 }
@@ -20,44 +30,13 @@ body {
   color: $input-color;
 }
 
-// 鮮やかなグリーンの半透明グラデーション用の変数
-$vivid-green-top: rgba(0, 255, 0, 0.4);    // より不透明な鮮やかなグリーン
-$vivid-green-bottom: rgba(0, 255, 0, 0.1); // より透明な鮮やかなグリーン
+$header-footer-gradient: linear-gradient(
+  to bottom,
+  rgba(40, 44, 52, 0.9),
+  rgba(30, 33, 39, 0.9)
+);
 
-// ヘッダーのスタイル
-header {
-  background: linear-gradient(
-    to bottom,
-    $vivid-green-top,
-    $vivid-green-bottom
-  );
-  padding: 20px 0;
-  position: relative;
-  z-index: 1000;
-}
-
-// フッターのスタイル
-footer {
-  background: linear-gradient(
-    to top,
-    $vivid-green-top,
-    $vivid-green-bottom
-  );
-  padding: 5px 0;
-  position: relative;
-  z-index: 1000;
-}
-
-// ヘッダーとフッター内のテキストのスタイル
-header, footer {
-  color: #ffffff;  // 白色テキスト（透明度が高いため、コントラストを確保）
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);  // テキストの可読性を向上
-  
-  a {
-    color: #ffffff;
-    &:hover {
-      color: #e0e0e0;
-      text-decoration: none;
-    }
-  }
+.header, footer {
+  background: $header-footer-gradient;
+  color: #e0e0e0;
 }
