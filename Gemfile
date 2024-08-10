@@ -87,3 +87,7 @@ gem 'jquery-rails'
 
 gem 'rails-i18n'
 
+group :production do
+  gem 'pg'
+end
+
