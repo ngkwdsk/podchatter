@@ -1,0 +1,44 @@
+<div class="random-comments">
+  <% @random_comments.each_with_index do |comment, index| %>
+    <% if comment.user.present? %>
+      <div class="random-comment">
+        <div class="comment-user">
+          <% if comment.user.icon.attached? %>
+            <%= image_tag comment.user.icon.variant(resize: '30x30'), class: 'user-icon-small' %>
+          <% else %>
+            <%= image_tag 'default.jpg', class: 'user-icon-small', size: '30x30' %>
+          <% end %>
+          <span class="user-name">
+					<% if comment.user %>
+						<%= link_to comment.user.nickname, index_user_podcast_path(comment.user), class: "user-link" %>
+					<% else %>
+						Unknown User
+					<% end %>
+					</span>
+				</div>
+				<div class="comment-text"><%= truncate(comment.text, length: 50) %></div>
+				<div class="comment-podcast">
+					<% if @random_comment_podcasts[index].present? %>
+						<%= link_to podcast_path(@random_comments[index].podcast_id), data: { turbo: false }, class: 'podcast-link' do %>
+							<div class="podcast-image-container">
+								<% if @random_comment_podcasts[index][:image].present? %>
+									<%= image_tag @random_comment_podcasts[index][:image], class: 'podcast-image-small' %>
+								<% else %>
+									<%= image_tag 'default_podcast_image.png', class: 'podcast-image-small' %>
+								<% end %>
+							</div>
+							<span class="podcast-name"><%= @random_comment_podcasts[index][:name] %></span>
+						<% end %>
+					<% else %>
+						<div class="podcast-link">
+							<div class="podcast-image-container">
+								<%= image_tag 'default_podcast_image.png', class: 'podcast-image-small' %>
+							</div>
+							<span class="podcast-name">Unknown Podcast</span>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+	<% end %>
+</div>

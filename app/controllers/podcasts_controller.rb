@@ -16,6 +16,17 @@ class PodcastsController < ApplicationController
       @liked_podcast = []
       @not_liked_podcast = @podcast_data
     end
+    @trending_podcasts = @not_liked_podcast.first(9)
+
+    if user_signed_in?
+      @random_comments = Comment.includes(:user, :podcast).where.not(user: nil).where.not(user_id: current_user.id).order("RAND()").limit(3)
+    else
+      @random_comments = Comment.includes(:user, :podcast).where.not(user: nil).order("RAND()").limit(3)
+    end
+    
+    @random_comment_podcasts = @random_comments.map do |comment|
+      get_podcast_data(comment.podcast) if comment.podcast.present?
+    end.compact
   end
 
   def show

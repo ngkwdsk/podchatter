@@ -38,53 +38,49 @@
 
     <!-- 右カラム：コメント -->
     <div class="col-md-6">
-      <div class="chat-container">
-        <h4 class= "text-center">このポッドキャストについて語ろう</h4>
-          <div class="chats-wrapper">
-            <div class="chats" id="comments">
-              <% if @podcast.original_podcast.comments.any? %>
-                <% @podcast.original_podcast.comments.each do |comment| %>
-                  <% if comment.user.present? %>
-                    <div class="chat">
-                      <% if comment.user.icon.attached? %>
-                        <%= image_tag comment.user.icon.variant(resize: '50x50'), alt: "ユーザーアイコン" %>
-                      <% else %>
-                        <%= image_tag 'default.jpg', size: '50x50', alt: "ユーザーアイコン" %>
-                      <% end %>
-                      <div class="chat-content">
-                        <div>
-                          <span class="name">
-                            <%= link_to comment.user.nickname, index_user_podcast_path(comment.user) %>
-                          </span>
-                          <span class="time">
-                            <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %>
-                          </span>
-                        </div>
-                        <div class="text"><%= sanitize(comment.text) %></div>
-                      </div>
-                    </div>
-                  <% end %>
-                <% end %>
-              <% end %>
-            </div>
-        
-            <div class="comment-form">
-              <% if user_signed_in? %>
-                <%= form_with model: [@podcast.original_podcast, @comment], id: "comment-form" do |f| %>
-                  <div class="form-group">
-                    <%= f.text_area :text, class: "form-control comment-text", placeholder: "コメントを入力..." %>
+      <div class="slack-chat-container">
+        <h4 class="text-center slack-header">このポッドキャストについて語ろう</h4>
+        <div class="slack-messages" id="comments">
+          <% if @podcast.original_podcast.comments.any? %>
+            <% @podcast.original_podcast.comments.each do |comment| %>
+              <% if comment.user.present? %>
+                <div class="slack-message">
+                  <div class="slack-message-avatar">
+                    <% if comment.user.icon.attached? %>
+                      <%= image_tag comment.user.icon.variant(resize: '40x40'), alt: "ユーザーアイコン" %>
+                    <% else %>
+                      <%= image_tag 'default.jpg', size: '40x40', alt: "ユーザーアイコン" %>
+                    <% end %>
                   </div>
-                  <%= f.submit "コメントをする", class: "btn btn-primary comment-submit" %>
-                <% end %>
-              <% else %>
-                <p>コメントを投稿するにはログインしてください。</p>
+                  <div class="slack-message-content">
+                    <div class="slack-message-header">
+                      <span class="slack-message-name"><%= link_to comment.user.nickname, index_user_podcast_path(comment.user) %></span>
+                      <span class="slack-message-time"><%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+                    </div>
+                    <div class="slack-message-text"><%= sanitize(comment.text) %></div>
+                  </div>
+                </div>
               <% end %>
-            </div>
-          </div>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="slack-message-input">
+          <% if user_signed_in? %>
+            <%= form_with model: [@podcast.original_podcast, @comment], id: "comment-form", class: "slack-form" do |f| %>
+              <%= f.text_area :text, class: "form-control slack-textarea", placeholder: "メッセージを入力..." %>
+              <%= button_tag type: 'submit', class: "btn btn-primary slack-submit" do %>
+                <i class="bi bi-send-fill"></i>
+              <% end %>            
+            <% end %>
+          <% else %>
+            <p class="slack-login-message">コメントを投稿するにはログインしてください。</p>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

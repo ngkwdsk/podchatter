@@ -21,14 +21,12 @@
       <% @searchpodcasts.each do |searchpodcast| %>
         <div class="col">
           <div class="card h-100">
-            <div class="aspect-ratio-box">
-              <% if searchpodcast.images.any? %>
-                <% image = searchpodcast.images[1] %>
-                <%= image_tag(image["url"], class: 'aspect-ratio-box-inside') %>
-              <% else %>
-                <%= image_tag("default.jpg", class: 'aspect-ratio-box-inside') %>
-              <% end %>
-            </div>
+            <% if searchpodcast.images.any? %>
+              <% image = searchpodcast.images[1] %>
+              <%= image_tag(image["url"], class: 'card-img-top') %>
+            <% else %>
+              <%= image_tag("default.jpg", class: 'card-img-top') %>
+            <% end %>
             <div class="card-body d-flex flex-column">
               <h5 class="card-title"><%= searchpodcast.name %></h5>
               <p class="card-text description-text flex-grow-1" data-full-text="<%= searchpodcast.description %>">

@@ -1,7 +1,7 @@
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="<%= image_path('image1.jpg') %>" class="d-block w-100" alt="First slide">
+      <img src="<%= image_path('image1.png') %>" class="d-block w-100" alt="First slide">
       <%# <div class="carousel-caption d-none d-md-block"> %>
       <%#  <h5>First Slide</h5> %>
       <%#  <p>Some representative placeholder content for the first slide.</p> %>
@@ -33,13 +33,27 @@
 </div>
 
 <div class="container py-4 works">
-  <% if user_signed_in? && @liked_podcast.present? %>
-    <h2 class=" index-podcast text-center">お気に入りポッドキャスト</h2>
-    <%= render 'podcasts', podcasts: @liked_podcast %>
-  <% end %>
-</div>
+  <% if user_signed_in? %>
+    <% if @liked_podcast.present? %>
+      <h2 class="index-podcast text-center">お気に入りポッドキャスト</h2>
+      <%= render 'podcasts', podcasts: @liked_podcast %>
+    <% end %>
 
-<div class="container py-4 works">
-  <h2 class="index-podcast text-center">人気上昇中のポッドキャスト</h2>
-  <%= render 'podcasts', podcasts: @not_liked_podcast %>
+    <div class="random-comments-container">
+      <h3>注目のコメント</h3>
+      <%= render 'random_comments' %>
+    </div>
+
+    <h2 class="index-podcast text-center">人気上昇中のポッドキャスト</h2>
+    <%= render 'podcasts', podcasts: @trending_podcasts %>
+
+  <% else %>
+    <h2 class="index-podcast text-center">人気上昇中のポッドキャスト</h2>
+    <%= render 'podcasts', podcasts: @trending_podcasts %>
+
+    <div class="random-comments-container">
+      <h3>注目のコメント</h3>
+      <%= render 'random_comments' %>
+    </div>
+  <% end %>
 </div>
