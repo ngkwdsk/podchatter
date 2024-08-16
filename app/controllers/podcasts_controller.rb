@@ -21,7 +21,7 @@ class PodcastsController < ApplicationController
     if user_signed_in?
       @random_comments = Comment.includes(:user, :podcast).where.not(user: nil).where.not(user_id: current_user.id).order("RAND()").limit(3)
     else
-      @random_comments = Comment.includes(:user, :podcast).where.not(user: nil).order("RAND()").limit(3)
+      @random_comments = Comment.includes(:user, :podcast).where.not(user: nil).order("RANDOM()").limit(3)
     end
     
     @random_comment_podcasts = @random_comments.map do |comment|
